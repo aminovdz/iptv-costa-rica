@@ -1,0 +1,49 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  schema?: string;
+  breadcrumbs?: string;
+}
+
+const { title, description, schema, breadcrumbs } = Astro.props;
+
+const orgSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "IPTV Costa Rica",
+  "url": "https://iptvcostarica.live",
+  "logo": "https://iptvcostarica.live/favicon.svg",
+  "sameAs": [
+    "https://whatsapp.com/channel/0029VayVaLpD8SE3bf8wMY3v",
+    "https://t.me/castvera_com"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+18036582620",
+    "contactType": "customer service"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "reviewCount": "524"
+  }
+});
+---
+
+<!doctype html>
+<html lang="es-CR" class="scroll-smooth">
+  <head>
+    <BaseHead title={title} description={description} />
+    <!-- Server-Side rendered Structured Data -->
+    <script type="application/ld+json" set:html={orgSchema} is:inline />
+    {schema && <script type="application/ld+json" set:html={schema} is:inline />}
+    {breadcrumbs && <script type="application/ld+json" set:html={breadcrumbs} is:inline />}
+  </head>
+  <body class="bg-background text-textPrimary antialiased selection:bg-primary/30 selection:text-white">
+    <slot />
+  </body>
+</html>

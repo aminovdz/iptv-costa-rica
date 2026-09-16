@@ -1,0 +1,79 @@
+---
+import { Gift, X } from 'lucide-astro';
+---
+<div id="exit-popup" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="glass-panel w-full max-w-lg mx-4 rounded-3xl p-8 relative scale-95 transition-transform duration-300 popup-content border border-secondary/30 shadow-[0_0_50px_rgba(206,17,38,0.2)]">
+    
+    <button id="close-exit-popup" class="absolute top-4 right-4 text-textSecondary hover:text-white transition-colors" aria-label="Cerrar ventana">
+      <X class="w-6 h-6" aria-hidden="true"/>
+    </button>
+    
+    <div class="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mb-6 mx-auto text-secondary">
+      <Gift class="w-8 h-8" aria-hidden="true" />
+    </div>
+    
+    <div class="text-center">
+      <h3 class="text-3xl font-extrabold text-white mb-3">¡Espere un Momento!</h3>
+      <p class="text-textSecondary text-lg mb-8">
+        No se vaya sin su regalo. <strong class="text-white">Suscríbase ahora y obtenga 1 mes GRATIS</strong> en su primer plan anual.
+      </p>
+      
+      <a href="https://wa.me/18036582620?text=Hola,%20quiero%20mi%20mes%20gratis%20en%20el%20plan%20anual" target="_blank" rel="noopener noreferrer" class="block w-full bg-secondary hover:bg-red-700 text-white py-4 rounded-full font-bold text-lg transition-all shadow-lg hover:-translate-y-1 mb-3">
+        Reclamar Mes Gratis por WhatsApp
+      </a>
+      
+      <button id="decline-exit-popup" class="text-sm text-textSecondary hover:text-white transition-colors">
+        No, gracias. Prefiero pagar precio completo.
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const popup = document.getElementById('exit-popup');
+    const closeBtn = document.getElementById('close-exit-popup');
+    const declineBtn = document.getElementById('decline-exit-popup');
+    const content = popup?.querySelector('.popup-content');
+    
+    const check24h = (key: string) => {
+      const lastShown = localStorage.getItem(key);
+      if (!lastShown) return true;
+      const now = new Date().getTime();
+      const hours24 = 24 * 60 * 60 * 1000;
+      return (now - parseInt(lastShown)) > hours24;
+    };
+    
+    const set24h = (key: string) => {
+      localStorage.setItem(key, new Date().getTime().toString());
+    };
+
+    const closePopup = () => {
+      popup?.classList.remove('opacity-100');
+      popup?.classList.add('opacity-0', 'pointer-events-none');
+      content?.classList.remove('scale-100');
+      content?.classList.add('scale-95');
+      popup?.setAttribute('aria-hidden', 'true');
+    };
+
+    const openPopup = () => {
+      if (!popup || !check24h('exit_popup_shown')) return;
+      popup.classList.remove('opacity-0', 'pointer-events-none');
+      popup.classList.add('opacity-100');
+      content?.classList.remove('scale-95');
+      content?.classList.add('scale-100');
+      popup.setAttribute('aria-hidden', 'false');
+      set24h('exit_popup_shown');
+    };
+
+    closeBtn?.addEventListener('click', closePopup);
+    declineBtn?.addEventListener('click', closePopup);
+    
+    // Trigger on mouse leave (desktop)
+    document.documentElement.addEventListener('mouseleave', (e) => {
+      if (e.clientY < 50) {
+        openPopup();
+      }
+    });
+  });
+</script>

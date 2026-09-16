@@ -1,0 +1,48 @@
+---
+import { MousePointerClick, SmartphoneNfc, Tv } from 'lucide-astro';
+
+const steps = [
+  {
+    num: "01",
+    title: "Elija su Plan",
+    description: "Seleccione el plan de suscripción que mejor se adapte a sus necesidades, o solicite una prueba gratis de 24 horas.",
+    icon: MousePointerClick
+  },
+  {
+    num: "02",
+    title: "Pague Seguro",
+    description: "Realice el pago de forma rápida y 100% segura utilizando Tarjetas y Cripto, transferencia bancaria o tarjeta.",
+    icon: SmartphoneNfc
+  },
+  {
+    num: "03",
+    title: "Configure y Disfrute",
+    description: "Le enviaremos las credenciales de inmediato. Ingrese a nuestra app en su Smart TV, móvil o PC y disfrute Pura Vida.",
+    icon: Tv
+  }
+];
+---
+<section class="py-24 bg-black/20" id="como-funciona" aria-labelledby="steps-heading">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-20">
+      <h2 id="steps-heading" class="text-3xl md:text-4xl font-bold mb-4 text-white">¿Cómo Funciona?</h2>
+      <p class="text-textSecondary text-lg">Comience a disfrutar de la mejor televisión en Costa Rica en menos de 5 minutos.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-12 relative">
+      <!-- Connection lines (desktop only) -->
+      <div class="hidden md:block absolute top-12 left-1/6 right-1/6 h-[2px] bg-gradient-to-r from-primary/0 via-primary/50 to-primary/0" aria-hidden="true"></div>
+
+      {steps.map(step => (
+        <div class="relative flex flex-col items-center text-center group">
+          <div class="w-24 h-24 rounded-2xl glass-panel flex items-center justify-center mb-6 relative z-10 border-white/10 group-hover:border-primary/50 transition-colors">
+            <span class="absolute -top-3 -right-3 bg-secondary text-white text-xs font-bold w-8 h-8 rounded-full flex items-center justify-center shadow-lg">{step.num}</span>
+            <step.icon class="w-10 h-10 text-textPrimary group-hover:text-primary transition-colors" aria-hidden="true" />
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">{step.title}</h3>
+          <p class="text-textSecondary text-sm leading-relaxed max-w-xs">{step.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

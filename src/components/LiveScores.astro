@@ -1,0 +1,50 @@
+---
+import { Activity } from 'lucide-astro';
+
+// Server-side fetch (SSR). This runs securely on the server to bake real data directly into the HTML payload.
+let games = [];
+try {
+  const res = await fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/ned.1/scoreboard');
+  const data = await res.json();
+  games = data.events?.slice(0, 3) || [];
+} catch (e) {
+  console.error("Error fetching live scores:", e);
+}
+---
+{games.length > 0 && (
+  <section class="py-6 border-b border-white/5 bg-background/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center gap-2 mb-4">
+        <Activity class="w-4 h-4 text-red-500 animate-pulse" />
+        <h3 class="text-xs font-bold uppercase tracking-wider text-textSecondary">Marcadores en Vivo (Eredivisie)</h3>
+      </div>
+      
+      <div class="flex flex-wrap gap-4">
+        {games.map((game: any) => {
+          const comp = game.competitions[0];
+          const home = comp.competitors.find((c: any) => c.homeAway === 'home');
+          const away = comp.competitors.find((c: any) => c.homeAway === 'away');
+          const status = game.status.type.shortDetail;
+          
+          return (
+            <div class="glass-panel border border-white/5 px-4 py-2 rounded-lg flex items-center gap-4 min-w-[250px]">
+              <div class="text-xs text-textSecondary w-16 text-center shrink-0 border-r border-white/10 pr-2">
+                {status}
+              </div>
+              <div class="flex flex-col gap-1 w-full">
+                <div class="flex justify-between items-center text-sm font-medium">
+                  <span class="text-white truncate max-w-[100px]">{home.team.shortDisplayName}</span>
+                  <span class="text-white font-bold ml-2">{home.score}</span>
+                </div>
+                <div class="flex justify-between items-center text-sm font-medium">
+                  <span class="text-white truncate max-w-[100px]">{away.team.shortDisplayName}</span>
+                  <span class="text-white font-bold ml-2">{away.score}</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+)}

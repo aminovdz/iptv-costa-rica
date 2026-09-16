@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StickyHeader from '../components/StickyHeader.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout 
+  title="DMCA y Copyright | IPTV Costa Rica" 
+  description="Políticas de derechos de autor y cumplimiento DMCA de IPTV Costa Rica."
+>
+  <StickyHeader />
+  
+  <main class="py-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="glass-panel p-8 md:p-12 rounded-3xl">
+        <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-8">Notificación DMCA y Copyright</h1>
+        
+        <div class="text-textSecondary space-y-6 leading-relaxed">
+          <p>IPTV Costa Rica respeta los derechos de propiedad intelectual de terceros y cumple con las disposiciones de la Digital Millennium Copyright Act (DMCA) y normativas internacionales de derechos de autor.</p>
+          
+          <h2 class="text-2xl font-bold text-white mt-10 mb-4">1. Naturaleza del Servicio (Safe Harbor)</h2>
+          <p>Debe entenderse que <strong>IPTV Costa Rica no aloja, almacena, ni transmite ningún archivo de video, canal de televisión o contenido multimedia en sus propios servidores</strong>. Nuestro servicio funciona estrictamente como un directorio y un proveedor de enrutamiento que conecta a los usuarios con transmisiones multimedia disponibles públicamente en Internet por terceros.</p>
+          
+          <h2 class="text-2xl font-bold text-white mt-10 mb-4">2. Remoción de Enlaces</h2>
+          <p>Si usted es el propietario de los derechos de autor de algún contenido indexado por nuestros enrutadores y desea que se elimine el acceso al mismo, procesaremos su solicitud de manera expedita de acuerdo con el protocolo DMCA.</p>
+
+          <h2 class="text-2xl font-bold text-white mt-10 mb-4">3. Presentación de una Queja</h2>
+          <p>Para enviar una notificación válida, por favor escriba a nuestro departamento legal: <a href="mailto:support@castvera.com" class="text-primary hover:underline font-bold">support@castvera.com</a>. Su solicitud debe incluir:</p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>Identificación precisa del material protegido por derechos de autor.</li>
+            <li>Información suficiente para localizar el enlace en nuestra plataforma.</li>
+            <li>Una declaración de buena fe indicando que el uso no está autorizado.</li>
+            <li>Firma física o electrónica del titular de los derechos.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

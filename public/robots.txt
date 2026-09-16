@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Disallow crawling of internal or legal unindexed paths if necessary
+Disallow: /cdn-cgi/
+
+# Sitemaps (Astro will generate the actual sitemap at build time via @astrojs/sitemap)
+Sitemap: https://iptvcostarica.live/sitemap-index.xml

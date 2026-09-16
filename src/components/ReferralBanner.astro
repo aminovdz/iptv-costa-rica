@@ -1,0 +1,21 @@
+---
+import { Users } from 'lucide-astro';
+---
+<section class="bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 border-y border-white/10 py-10" aria-label="Programa de referidos">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center shrink-0">
+          <Users class="w-6 h-6 text-white" aria-hidden="true" />
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-white mb-1">¡Invita a un amigo y gana!</h3>
+          <p class="text-textSecondary text-sm">Por cada amigo que refieras y contrate, ambos reciben 1 Mes Gratis.</p>
+        </div>
+      </div>
+      <a href="/referral" class="px-6 py-3 bg-white text-primary font-bold rounded-full hover:bg-gray-200 transition-colors shrink-0 whitespace-nowrap">
+        Ver Detalles del Programa
+      </a>
+    </div>
+  </div>
+</section>

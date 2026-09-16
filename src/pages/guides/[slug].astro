@@ -1,0 +1,137 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import StickyHeader from '../../components/StickyHeader.astro';
+import Footer from '../../components/Footer.astro';
+import { type CollectionEntry, getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('guides');
+  return entries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'guides'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const articleSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": entry.data.title,
+  "description": entry.data.description,
+  "datePublished": entry.data.pubDate.toISOString(),
+  "author": {
+    "@type": "Organization",
+    "name": "IPTV Costa Rica"
+  }
+});
+---
+
+<Layout 
+  title={`${entry.data.title} | IPTV Costa Rica`} 
+  description={entry.data.description}
+  schema={articleSchema}
+>
+  <StickyHeader />
+  
+  <main class="py-20 bg-background">
+    <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <header class="mb-12 text-center">
+        <time class="text-primary font-bold tracking-wide uppercase text-sm mb-4 block">
+          {entry.data.pubDate.toLocaleDateString('es-CR', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </time>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-6">
+          {entry.data.title}
+        </h1>
+        <p class="text-xl text-textSecondary max-w-2xl mx-auto">
+          {entry.data.description}
+        </p>
+      </header>
+
+      {entry.data.heroImage && (
+        <img 
+          src={entry.data.heroImage} 
+          alt={`Imagen ilustrativa para: ${entry.data.title}`} 
+          class="w-full rounded-2xl mb-12 shadow-2xl border border-white/5" 
+        />
+      )}
+
+      <!-- Content rendering with strict formatting rules injected globally below -->
+      <div class="prose-content">
+        <Content />
+      </div>
+
+      <!-- Permanent Promotional Banner injected at the end of the post -->
+      <div class="mt-16 glass-panel border border-primary/50 rounded-2xl p-8 text-center bg-gradient-to-tr from-primary/10 to-transparent">
+        <h3 class="text-2xl font-bold text-white mb-3">La Solución Definitiva: IPTV Costa Rica</h3>
+        <p class="text-textSecondary mb-6">Deje de perder el tiempo con configuraciones complejas o servicios de cable costosos. Obtenga acceso inmediato a la Liga FPD y miles de canales HD hoy mismo.</p>
+        <a href="https://wa.me/18036582620" class="inline-block bg-secondary hover:bg-red-700 text-white px-8 py-3 rounded-full font-bold shadow-lg transition-all hover:-translate-y-1">
+          Solicite su Prueba Gratis de 24h
+        </a>
+      </div>
+
+    </article>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style is:global>
+  /* Strict markdown UX formatting rules as requested */
+  .prose-content {
+    color: var(--color-textPrimary);
+    font-size: 1.125rem;
+    line-height: 1.8;
+  }
+  .prose-content h2 {
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.025em;
+  }
+  .prose-content h3 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  .prose-content p {
+    margin-bottom: 1.5rem;
+    color: var(--color-textSecondary);
+  }
+  .prose-content ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-textSecondary);
+  }
+  .prose-content li {
+    margin-bottom: 0.5rem;
+  }
+  .prose-content strong {
+    color: #ffffff;
+    font-weight: 700;
+  }
+  .prose-content a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .prose-content a:hover {
+    color: var(--color-secondary);
+  }
+  .prose-content img {
+    border-radius: 1rem;
+    margin: 2rem 0;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+</style>

@@ -1,0 +1,38 @@
+---
+import { MapPin } from 'lucide-astro';
+
+const cities = [
+  { name: "San José", slug: "san-jose" },
+  { name: "Alajuela", slug: "alajuela" },
+  { name: "Cartago", slug: "cartago" },
+  { name: "Heredia", slug: "heredia" },
+  { name: "Guanacaste", slug: "guanacaste" },
+  { name: "Puntarenas", slug: "puntarenas" },
+  { name: "Limón", slug: "limon" },
+  { name: "Escazú", slug: "escazu" }
+];
+---
+<section class="py-24 bg-card border-y border-white/5" aria-labelledby="cities-heading">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6">
+      <MapPin class="w-4 h-4 text-secondary" aria-hidden="true" />
+      <span class="text-xs font-semibold uppercase tracking-wider text-textPrimary">Cobertura Nacional</span>
+    </div>
+    
+    <h2 id="cities-heading" class="text-3xl font-bold mb-4 text-white">Disponible en Todo Costa Rica</h2>
+    <p class="text-textSecondary max-w-2xl mx-auto mb-12 text-lg">
+      No importa en qué provincia se encuentre, nuestra señal premium llega a cada rincón del país con la mejor velocidad y estabilidad.
+    </p>
+
+    <div class="flex flex-wrap justify-center gap-4">
+      {cities.map(city => (
+        <a 
+          href={`/locations/${city.slug}`} 
+          class="glass-panel px-6 py-3 rounded-full text-textPrimary hover:text-white hover:border-primary/50 hover:bg-primary/10 transition-all font-medium text-sm flex items-center gap-2"
+        >
+          {city.name}
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

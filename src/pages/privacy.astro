@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StickyHeader from '../components/StickyHeader.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout 
+  title="Política de Privacidad | IPTV Costa Rica" 
+  description="Conozca nuestra política de privacidad y cómo protegemos sus datos."
+>
+  <StickyHeader />
+  
+  <main class="py-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="glass-panel p-8 md:p-12 rounded-3xl">
+        <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-8">Política de Privacidad</h1>
+        
+        <div class="text-textSecondary space-y-6 leading-relaxed">
+          <p>Última actualización: {new Date().toLocaleDateString('es-CR')}</p>
+          
+          <p>En IPTV Costa Rica, respetamos su privacidad y nos comprometemos a proteger sus datos personales. Esta política de privacidad explica cómo recopilamos, usamos y resguardamos su información cuando visita nuestro sitio web o utiliza nuestros servicios.</p>
+          
+          <h2 class="text-2xl font-bold text-white mt-10 mb-4">1. Información que Recopilamos</h2>
+          <p>Recopilamos información básica para proveer el servicio de suscripción y soporte, como su nombre, correo electrónico y número de teléfono (especialmente al usar métodos de pago como Tarjetas y Cripto o WhatsApp).</p>
+          
+          <h2 class="text-2xl font-bold text-white mt-10 mb-4">2. Uso de la Información</h2>
+          <p>Utilizamos su información estrictamente para:
+            <ul class="list-disc pl-6 mt-2 space-y-2">
+              <li>Crear y gestionar su cuenta de IPTV.</li>
+              <li>Procesar transacciones a través de Tarjetas y Cripto u otras pasarelas.</li>
+              <li>Enviar credenciales de acceso y recordatorios de renovación.</li>
+              <li>Proveer soporte técnico eficiente.</li>
+            </ul>
+          </p>
+
+          <h2 class="text-2xl font-bold text-white mt-10 mb-4">3. Protección de Datos</h2>
+          <p>No vendemos, alquilamos ni compartimos su información personal con terceros. Implementamos medidas de seguridad estándar de la industria, incluyendo encriptación SSL, para proteger sus datos de acceso no autorizado.</p>
+
+          <h2 class="text-2xl font-bold text-white mt-10 mb-4">4. Contacto</h2>
+          <p>Si tiene alguna pregunta sobre esta política de privacidad, por favor contáctenos a través de nuestro correo oficial: <a href="mailto:contact@iptvcostarica.live" class="text-primary hover:underline">contact@iptvcostarica.live</a>.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

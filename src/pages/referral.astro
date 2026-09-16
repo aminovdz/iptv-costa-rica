@@ -1,0 +1,58 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StickyHeader from '../components/StickyHeader.astro';
+import Footer from '../components/Footer.astro';
+import { Users, Gift, Share2, ArrowRight } from 'lucide-astro';
+---
+
+<Layout 
+  title="Programa de Referidos | Gane 1 Mes Gratis | IPTV Costa Rica" 
+  description="Invite a sus amigos a IPTV Costa Rica. Por cada referido que contrate un plan, ambos ganan 1 mes de servicio premium gratis."
+>
+  <StickyHeader />
+  
+  <main class="py-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 border border-secondary/20 mb-8">
+        <Gift class="w-4 h-4 text-secondary" aria-hidden="true" />
+        <span class="text-xs font-semibold uppercase tracking-wider text-secondary">Programa de Recompensas</span>
+      </div>
+
+      <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6">Tráigase a un compa y <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Ganen 1 Mes Gratis</span></h1>
+      
+      <p class="text-xl text-textSecondary mb-16 max-w-2xl mx-auto">
+        El boca a boca es nuestra mejor publicidad en Costa Rica. Si usted ya es cliente, invite a sus amigos y familiares. Cuando ellos compren un plan, ¡ambos reciben 30 días adicionales completamente gratis!
+      </p>
+
+      <!-- Steps -->
+      <div class="grid md:grid-cols-3 gap-8 mb-16">
+        <div class="glass-panel p-8 rounded-2xl relative">
+          <div class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/10 text-white font-bold text-xl">1</div>
+          <Share2 class="w-8 h-8 text-primary mx-auto mb-4" aria-hidden="true" />
+          <h3 class="text-lg font-bold text-white mb-2">Comparta la Voz</h3>
+          <p class="text-sm text-textSecondary">Dígale a su amigo que nos contacte y pida una prueba gratis mencionando su nombre o correo.</p>
+        </div>
+        <div class="glass-panel p-8 rounded-2xl relative">
+          <div class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/10 text-white font-bold text-xl">2</div>
+          <Users class="w-8 h-8 text-primary mx-auto mb-4" aria-hidden="true" />
+          <h3 class="text-lg font-bold text-white mb-2">Su Amigo Compra</h3>
+          <p class="text-sm text-textSecondary">Su amigo paga su primer plan mensual o anual (aceptamos Tarjetas y Cripto).</p>
+        </div>
+        <div class="glass-panel p-8 rounded-2xl relative border-secondary/30 shadow-[0_0_30px_rgba(206,17,38,0.1)]">
+          <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">3</div>
+          <Gift class="w-8 h-8 text-secondary mx-auto mb-4" aria-hidden="true" />
+          <h3 class="text-lg font-bold text-white mb-2">¡Ambos Ganan!</h3>
+          <p class="text-sm text-textSecondary">Añadimos 30 días de servicio premium gratis tanto a su cuenta como a la de su amigo.</p>
+        </div>
+      </div>
+
+      <a href="https://wa.me/18036582620?text=Hola,%20tengo%20un%20amigo%20que%20quiere%20contratar%20el%20servicio%20por%20mi%20recomendaci%C3%B3n" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-secondary hover:bg-red-700 text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-xl hover:-translate-y-1">
+        Reclamar Recompensa por WhatsApp <ArrowRight class="w-5 h-5" aria-hidden="true"/>
+      </a>
+      
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

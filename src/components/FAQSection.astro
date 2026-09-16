@@ -1,0 +1,73 @@
+---
+const faqs = [
+  {
+    question: "¿Qué dispositivos son compatibles con el servicio?",
+    answer: "Nuestro servicio es compatible con casi cualquier dispositivo inteligente: Smart TVs (Samsung, LG, Android TV), Amazon Fire TV Stick, Chromecast, Apple TV, PC (Windows/Mac), y smartphones o tablets (iOS/Android). Además, al adquirir el plan de 12 meses, le incluimos la Aplicación Premium completamente gratis."
+  },
+  {
+    question: "¿Puedo ver los partidos de la Liga FPD y La Sele?",
+    answer: "¡Sí, por supuesto! Contamos con todos los canales nacionales de Costa Rica, incluyendo aquellos que transmiten en exclusiva la Liga FPD, partidos de La Sele, y eventos deportivos de primera división en calidad 4K/HD sin cortes."
+  },
+  {
+    question: "¿Qué velocidad de internet necesito?",
+    answer: "Para una experiencia óptima y sin interrupciones, recomendamos una conexión de internet de al menos 15 Mbps para canales en HD y 30 Mbps para canales en 4K. Una conexión por fibra óptica y utilizar un cable Ethernet garantizan la máxima estabilidad."
+  },
+  {
+    question: "¿Cuántos dispositivos puedo conectar al mismo tiempo?",
+    answer: "Nuestra suscripción estándar permite conectar hasta 3 dispositivos simultáneamente. Si requiere más pantallas para toda su familia, contáctenos por WhatsApp para armarle un paquete personalizado."
+  },
+  {
+    question: "¿Cómo funciona el pago?",
+    answer: "El proceso es simple y seguro. Aceptamos diversas formas de pago y tarjetas. Una vez realizado el pago, la activación de su cuenta es inmediata y nuestro equipo técnico le asiste por WhatsApp."
+  },
+  {
+    question: "¿Tienen algún tipo de contrato forzoso?",
+    answer: "No, en IPTV Costa Rica no creemos en amarrar a nuestros clientes. Trabajamos con un sistema prepago; usted paga el mes (o los meses) que desea usar. Si decide no renovar, no hay multas ni penalidades."
+  },
+  {
+    question: "¿Qué hago si tengo problemas de 'buffering' o congelamiento?",
+    answer: "El 99% de los casos de buffering se deben a la conexión Wi-Fi local. Le recomendamos reiniciar su router y su dispositivo. Si el problema persiste, nuestro equipo de soporte técnico VIP está disponible vía WhatsApp para solucionar cualquier inconveniente inmediatamente."
+  }
+];
+
+// Server-rendered FAQ Schema
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+};
+---
+<section class="py-24 bg-background" id="faq" aria-labelledby="faq-heading">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 id="faq-heading" class="text-3xl md:text-4xl font-bold mb-4 text-white">Preguntas Frecuentes</h2>
+      <p class="text-textSecondary text-lg">Resolvemos sus dudas sobre el mejor IPTV de Costa Rica.</p>
+    </div>
+
+    <div class="space-y-4">
+      {faqs.map((faq) => (
+        <details class="group glass-panel rounded-xl overflow-hidden border border-white/5 [&_summary::-webkit-details-marker]:hidden">
+          <summary class="flex items-center justify-between p-6 cursor-pointer font-medium text-white hover:bg-white/5 transition-colors">
+            <span class="pr-8">{faq.question}</span>
+            <span class="transition group-open:rotate-180">
+              <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24" class="text-primary"><path d="M6 9l6 6 6-6"></path></svg>
+            </span>
+          </summary>
+          <div class="p-6 pt-0 text-textSecondary leading-relaxed border-t border-white/5 mt-2">
+            {faq.answer}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Injecting Schema via SSR using is:inline so it renders exactly as structured data without Astro hydration warnings -->
+<script type="application/ld+json" set:html={JSON.stringify(schema)} is:inline />

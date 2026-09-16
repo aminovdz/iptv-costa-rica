@@ -1,0 +1,65 @@
+---
+import { Menu, X, Tv } from 'lucide-astro';
+---
+<header class="sticky top-0 z-50 w-full glass-panel border-b border-white/10 transition-all duration-300" id="main-header">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      <!-- Brand -->
+      <a href="/" class="flex items-center gap-2 group" aria-label="IPTV Costa Rica Inicio">
+        <Tv class="w-8 h-8 text-primary group-hover:text-secondary transition-colors" aria-hidden="true" />
+        <span class="font-bold text-xl tracking-tight text-textPrimary">IPTV Costa Rica</span>
+      </a>
+      
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex gap-8 items-center" aria-label="Navegación Principal">
+        <a href="/" class="text-sm font-medium text-textPrimary/80 hover:text-white transition-colors">Inicio</a>
+        <a href="/precios" class="text-sm font-medium text-textPrimary/80 hover:text-white transition-colors">Precios</a>
+        <a href="/canales" class="text-sm font-medium text-textPrimary/80 hover:text-white transition-colors">Canales</a>
+        <a href="/guides" class="text-sm font-medium text-textPrimary/80 hover:text-white transition-colors">Guías</a>
+        <a href="https://wa.me/18036582620" target="_blank" rel="noopener noreferrer" class="bg-secondary hover:bg-red-700 text-white px-5 py-2.5 rounded-full font-semibold text-sm transition-all shadow-[0_0_15px_rgba(206,17,38,0.3)] hover:shadow-[0_0_25px_rgba(206,17,38,0.5)]">
+          Pruebe Gratis
+        </a>
+      </nav>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden flex items-center">
+        <button id="mobile-menu-btn" class="text-textPrimary hover:text-white p-2" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú">
+          <Menu class="w-6 h-6 menu-open-icon" aria-hidden="true" />
+          <X class="w-6 h-6 menu-close-icon hidden" aria-hidden="true" />
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="md:hidden hidden bg-card border-b border-white/10" aria-hidden="true">
+    <div class="px-2 pt-2 pb-6 space-y-1 sm:px-3 flex flex-col items-center">
+      <a href="/" class="block px-3 py-3 text-base font-medium text-textPrimary hover:text-white">Inicio</a>
+      <a href="/precios" class="block px-3 py-3 text-base font-medium text-textPrimary hover:text-white">Precios</a>
+      <a href="/canales" class="block px-3 py-3 text-base font-medium text-textPrimary hover:text-white">Canales</a>
+      <a href="/guides" class="block px-3 py-3 text-base font-medium text-textPrimary hover:text-white">Guías</a>
+      <a href="https://wa.me/18036582620" target="_blank" rel="noopener noreferrer" class="mt-4 block w-[90%] text-center bg-secondary hover:bg-red-700 text-white px-5 py-3 rounded-full font-semibold transition-all">
+        Pruebe Gratis
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Simple accessible mobile menu toggle
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const openIcon = document.querySelector('.menu-open-icon');
+  const closeIcon = document.querySelector('.menu-close-icon');
+
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true' || false;
+      btn.setAttribute('aria-expanded', (!expanded).toString());
+      menu.classList.toggle('hidden');
+      menu.setAttribute('aria-hidden', expanded.toString());
+      openIcon?.classList.toggle('hidden');
+      closeIcon?.classList.toggle('hidden');
+    });
+  }
+</script>

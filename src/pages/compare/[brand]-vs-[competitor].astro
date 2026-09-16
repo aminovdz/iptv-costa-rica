@@ -1,0 +1,91 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import StickyHeader from '../../components/StickyHeader.astro';
+import Footer from '../../components/Footer.astro';
+import PricingCard from '../../components/PricingCard.astro';
+import CTASection from '../../components/CTASection.astro';
+import { Check, X } from 'lucide-astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { brand: 'iptv-costa-rica', competitor: 'cabletica' }, props: { compName: 'Cabletica / Liberty' } },
+    { params: { brand: 'iptv-costa-rica', competitor: 'tigo' }, props: { compName: 'Tigo' } },
+    { params: { brand: 'iptv-costa-rica', competitor: 'pura-tv' }, props: { compName: 'Pura TV' } }
+  ];
+}
+
+const { competitor } = Astro.params;
+const { compName } = Astro.props;
+
+const title = `IPTV Costa Rica vs ${compName} | Comparación Honesta 2025`;
+const description = `¿Buscando la mejor alternativa a ${compName} en Costa Rica? Descubra por qué nuestro servicio IPTV ofrece más canales y mejor calidad a una fracción del precio.`;
+---
+
+<Layout title={title} description={description}>
+  <StickyHeader />
+  
+  <main class="py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6">
+          <span class="text-xs font-semibold uppercase tracking-wider text-textPrimary">Guía de Comparación</span>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6">
+          IPTV Costa Rica vs. {compName}
+        </h1>
+        <p class="text-lg text-textSecondary">
+          Analizamos las diferencias clave en precio, calidad, canales deportivos (Liga FPD) y flexibilidad para ayudarle a tomar la mejor decisión de entretenimiento.
+        </p>
+      </div>
+
+      <!-- Comparison Table -->
+      <div class="glass-panel rounded-3xl overflow-hidden mb-24 border border-white/10">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse min-w-[600px]">
+            <thead>
+              <tr class="bg-white/5 border-b border-white/10">
+                <th class="p-6 text-textSecondary font-semibold">Característica</th>
+                <th class="p-6 text-white font-extrabold text-xl bg-primary/10 border-l border-white/10 w-1/3">IPTV Costa Rica</th>
+                <th class="p-6 text-textSecondary font-bold text-lg border-l border-white/10 w-1/3">{compName}</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="p-6 font-medium text-white">Precio Promedio Mensual</td>
+                <td class="p-6 text-green-400 font-bold bg-primary/5 border-l border-white/10">Desde $5 USD (₡2,600)</td>
+                <td class="p-6 text-red-400 font-medium border-l border-white/10">Alta / Variables con contratos</td>
+              </tr>
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="p-6 font-medium text-white">Deportes Premium (Liga FPD)</td>
+                <td class="p-6 border-l border-white/10 bg-primary/5"><Check class="w-6 h-6 text-green-500" /></td>
+                <td class="p-6 border-l border-white/10"><Check class="w-6 h-6 text-yellow-500" /> (A menudo con costo extra)</td>
+              </tr>
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="p-6 font-medium text-white">Uso en Smart TV, Móvil y PC</td>
+                <td class="p-6 border-l border-white/10 bg-primary/5"><Check class="w-6 h-6 text-green-500" /></td>
+                <td class="p-6 border-l border-white/10"><X class="w-6 h-6 text-red-500" /> (Limitado o requiere app costosa)</td>
+              </tr>
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="p-6 font-medium text-white">Instalación y Cables</td>
+                <td class="p-6 text-green-400 font-medium bg-primary/5 border-l border-white/10">100% Inalámbrico (Digital)</td>
+                <td class="p-6 text-textSecondary font-medium border-l border-white/10">Requiere visita técnica y cables</td>
+              </tr>
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="p-6 font-medium text-white">Contratos forzosos</td>
+                <td class="p-6 text-green-400 font-medium bg-primary/5 border-l border-white/10">Ninguno. Cancele cuando quiera.</td>
+                <td class="p-6 text-red-400 font-medium border-l border-white/10">Generalmente 12-24 meses</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+    
+    <PricingCard />
+    <CTASection />
+  </main>
+
+  <Footer />
+</Layout>

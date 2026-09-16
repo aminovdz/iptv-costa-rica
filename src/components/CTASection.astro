@@ -1,0 +1,29 @@
+---
+import { MessageCircle, CreditCard } from 'lucide-astro';
+---
+<section class="py-24 relative overflow-hidden" aria-labelledby="cta-heading">
+  <!-- Background Gradient -->
+  <div class="absolute inset-0 bg-gradient-to-br from-primary/80 to-secondary/80 opacity-90" aria-hidden="true"></div>
+  <!-- Optional Noise overlay -->
+  <div class="absolute inset-0 opacity-10 mix-blend-overlay bg-black" aria-hidden="true"></div>
+  
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+    <h2 id="cta-heading" class="text-3xl md:text-5xl font-extrabold text-white mb-6">
+      ¿Listo para cambiar a la mejor televisión?
+    </h2>
+    <p class="text-lg text-white/80 mb-10 max-w-2xl mx-auto">
+      Deje de pagar de más por cable tradicional. Disfrute del mejor contenido premium, eventos deportivos en vivo, películas y series al instante.
+    </p>
+    
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <a href="https://wa.me/18036582620" class="flex items-center gap-2 bg-white text-primary hover:bg-gray-100 px-8 py-4 rounded-full font-bold text-lg transition-all shadow-xl hover:-translate-y-1 w-full sm:w-auto justify-center" aria-label="Contactar soporte vía WhatsApp">
+        <MessageCircle class="w-5 h-5" aria-hidden="true" />
+        Contactar por WhatsApp
+      </a>
+      <a href="/precios" class="flex items-center gap-2 bg-black/30 hover:bg-black/50 text-white px-8 py-4 rounded-full font-bold text-lg transition-all border border-white/20 w-full sm:w-auto justify-center backdrop-blur-sm" aria-label="Ver lista de planes y precios">
+        <CreditCard class="w-5 h-5" aria-hidden="true" />
+        Ver Planes
+      </a>
+    </div>
+  </div>
+</section>

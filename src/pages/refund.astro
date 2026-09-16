@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StickyHeader from '../components/StickyHeader.astro';
+import Footer from '../components/Footer.astro';
+import { AlertOctagon } from 'lucide-astro';
+---
+
+<Layout 
+  title="Política de Reembolso Estricta (24 Horas) | IPTV Costa Rica" 
+  description="Conozca nuestra política estricta de reembolsos válida únicamente durante las primeras 24 horas."
+>
+  <StickyHeader />
+  
+  <main class="py-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="glass-panel p-8 md:p-12 rounded-3xl border-l-4 border-l-secondary">
+        
+        <div class="flex items-center gap-4 mb-8">
+          <AlertOctagon class="w-12 h-12 text-secondary" aria-hidden="true" />
+          <h1 class="text-3xl md:text-5xl font-extrabold text-white">Política de Reembolso</h1>
+        </div>
+        
+        <div class="text-textSecondary space-y-6 leading-relaxed">
+          <p class="text-xl font-bold text-white bg-secondary/20 p-4 rounded-lg">
+            REGLA ESTRICTA: Todas las solicitudes de reembolso deben realizarse dentro de las primeras 24 horas posteriores al pago. Sin excepciones.
+          </p>
+          
+          <h2 class="text-2xl font-bold text-white mt-10 mb-4">1. El Período de 24 Horas</h2>
+          <p>Dado que ofrecemos pruebas gratuitas para que nuestros clientes evalúen la calidad, estabilidad y lista de canales de nuestra plataforma antes de comprometerse, <strong>solo procesaremos reembolsos si la solicitud se realiza exactamente dentro de las primeras 24 horas (1 día)</strong> desde la confirmación de la compra.</p>
+          
+          <h2 class="text-2xl font-bold text-white mt-10 mb-4">2. Por qué somos estrictos</h2>
+          <p>Nuestro servicio de activación incurre en costos de servidor inmediatos. Le recomendamos encarecidamente que solicite y utilice la <strong>prueba gratuita de 24 horas</strong> antes de realizar cualquier pago a través de Tarjetas y Cripto o tarjeta. Si decide pagar sin probar el servicio primero, sigue sujeto al mismo límite de reembolso de 24 horas.</p>
+
+          <h2 class="text-2xl font-bold text-white mt-10 mb-4">3. Cuándo NO aplica un reembolso</h2>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>Si han pasado más de 24 horas desde su pago.</li>
+            <li>Si los problemas de conexión son resultado de un proveedor de internet local (ISP) defectuoso o inestable de su lado.</li>
+            <li>Si su dispositivo personal está dañado, desactualizado o no soporta aplicaciones de streaming.</li>
+            <li>Si su cuenta fue suspendida por compartir credenciales abusivamente (violación de términos).</li>
+          </ul>
+
+          <h2 class="text-2xl font-bold text-white mt-10 mb-4">4. Cómo solicitar la devolución</h2>
+          <p>Si está dentro del plazo de 24 horas, contacte a nuestro equipo de soporte directamente a <a href="mailto:support@castvera.com" class="text-primary hover:underline">support@castvera.com</a> o mediante nuestro WhatsApp oficial, indicando su número de orden y el comprobante de Tarjetas y Cripto o tarjeta.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

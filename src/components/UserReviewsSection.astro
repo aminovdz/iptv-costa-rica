@@ -1,0 +1,52 @@
+---
+import { Star } from 'lucide-astro';
+
+const reviews = [
+  {
+    name: "Carlos M.",
+    location: "San José",
+    text: "Mae, al chile este servicio es otro nivel. Llevo 3 meses y no se me ha pegado ni un solo partido de Saprissa. Pagué rapidísimo por Pago Seguro.",
+    rating: 5
+  },
+  {
+    name: "Laura V.",
+    location: "Alajuela",
+    text: "Cancelé mi suscripción de cable carísima. Ahora tengo todos los canales nacionales y las series para los chiquitos. ¡Pura vida, muy recomendados!",
+    rating: 5
+  },
+  {
+    name: "David H.",
+    location: "Cartago",
+    text: "Excelente servicio al cliente por WhatsApp. Me ayudaron a configurarlo en mi Smart TV LG en 5 minutos. Funciona perfecto para ver La Sele.",
+    rating: 5
+  }
+];
+---
+<section class="py-24 bg-black/20" id="reviews" aria-labelledby="reviews-heading">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 id="reviews-heading" class="text-3xl md:text-4xl font-bold mb-4 text-white">Miles de Ticos Satisfechos</h2>
+      <p class="text-textSecondary text-lg">No tome solo nuestra palabra. Vea lo que dicen nuestros clientes en toda Costa Rica.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      {reviews.map(review => (
+        <div class="glass-panel p-8 rounded-2xl border-white/5 relative">
+          <div class="flex text-yellow-400 mb-4" aria-hidden="true">
+            {[...Array(review.rating)].map(() => <Star class="w-4 h-4 fill-current" />)}
+          </div>
+          <p class="text-textSecondary text-sm italic mb-6 leading-relaxed">"{review.text}"</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">
+              {review.name.charAt(0)}
+            </div>
+            <div>
+              <p class="text-white font-bold text-sm">{review.name}</p>
+              <p class="text-xs text-textSecondary">{review.location}, Costa Rica</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

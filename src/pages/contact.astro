@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StickyHeader from '../components/StickyHeader.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout 
+  title="Contacto y Soporte Técnico | IPTV Costa Rica" 
+  description="Contáctenos para pruebas gratuitas, activaciones, pagos por Tarjetas y Cripto o soporte técnico."
+>
+  <StickyHeader />
+  
+  <main class="min-h-screen pt-12 pb-24">
+    <!-- The ContactForm component itself acts as the main body since it's a full section -->
+    <ContactForm />
+  </main>
+
+  <Footer />
+</Layout>

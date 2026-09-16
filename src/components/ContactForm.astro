@@ -1,0 +1,86 @@
+---
+import { Mail, MessageSquare, Send, Phone } from 'lucide-astro';
+---
+<section class="py-24 relative" id="contacto" aria-labelledby="contact-heading">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 id="contact-heading" class="text-3xl md:text-4xl font-bold mb-4 text-white">Centro de Soporte y Contacto</h2>
+      <p class="text-textSecondary text-lg">Estamos disponibles 24/7 para ayudarle con activaciones, pruebas gratis y soporte técnico.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-12 items-start">
+      
+      <!-- Contact Cards -->
+      <div class="space-y-6">
+        <a href="https://wa.me/18036582620" target="_blank" rel="noopener noreferrer" class="glass-panel p-6 rounded-2xl flex items-center gap-4 hover:-translate-y-1 transition-transform border border-green-500/20 group">
+          <div class="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center shrink-0">
+            <Phone class="w-6 h-6 text-green-500" aria-hidden="true"/>
+          </div>
+          <div>
+            <h3 class="text-white font-bold text-lg group-hover:text-green-400 transition-colors">Atención Inmediata por WhatsApp</h3>
+            <p class="text-textSecondary text-sm">+1 803 658 2620</p>
+          </div>
+        </a>
+
+        <a href="https://whatsapp.com/channel/0029VayVaLpD8SE3bf8wMY3v" target="_blank" rel="noopener noreferrer" class="glass-panel p-6 rounded-2xl flex items-center gap-4 hover:-translate-y-1 transition-transform border border-white/5 group">
+          <div class="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center shrink-0">
+            <MessageSquare class="w-6 h-6 text-green-500" aria-hidden="true"/>
+          </div>
+          <div>
+            <h3 class="text-white font-bold text-lg group-hover:text-green-400 transition-colors">Canal Oficial de WhatsApp</h3>
+            <p class="text-textSecondary text-sm">Novedades y estado del servidor</p>
+          </div>
+        </a>
+
+        <a href="https://t.me/castvera_com" target="_blank" rel="noopener noreferrer" class="glass-panel p-6 rounded-2xl flex items-center gap-4 hover:-translate-y-1 transition-transform border border-white/5 group">
+          <div class="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center shrink-0">
+            <Send class="w-6 h-6 text-blue-500" aria-hidden="true"/>
+          </div>
+          <div>
+            <h3 class="text-white font-bold text-lg group-hover:text-blue-400 transition-colors">Canal Oficial de Telegram</h3>
+            <p class="text-textSecondary text-sm">Únase a nuestra comunidad exclusiva</p>
+          </div>
+        </a>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div class="glass-panel p-6 rounded-2xl border border-white/5">
+            <Mail class="w-6 h-6 text-primary mb-3" aria-hidden="true"/>
+            <h3 class="text-white font-bold mb-1 text-sm">Consultas Generales</h3>
+            <a href="mailto:contact@iptvcostarica.live" class="text-textSecondary text-sm hover:text-white transition-colors break-all">contact@iptvcostarica.live</a>
+          </div>
+          <div class="glass-panel p-6 rounded-2xl border border-white/5">
+            <Mail class="w-6 h-6 text-secondary mb-3" aria-hidden="true"/>
+            <h3 class="text-white font-bold mb-1 text-sm">Soporte Técnico</h3>
+            <a href="mailto:support@castvera.com" class="text-textSecondary text-sm hover:text-white transition-colors break-all">support@castvera.com</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="glass-panel p-8 rounded-2xl border border-white/5">
+        <h3 class="text-2xl font-bold text-white mb-6">Envíenos un mensaje</h3>
+        <form class="space-y-4" onsubmit="event.preventDefault(); alert('Gracias por su mensaje. Le contactaremos pronto.');">
+          <div>
+            <label for="name" class="block text-sm font-medium text-textSecondary mb-1">Nombre Completo</label>
+            <input type="text" id="name" required class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors" placeholder="Su nombre">
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-textSecondary mb-1">Correo Electrónico</label>
+            <input type="email" id="email" required class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors" placeholder="su@correo.com">
+          </div>
+          <div>
+            <label for="message" class="block text-sm font-medium text-textSecondary mb-1">Mensaje</label>
+            <textarea id="message" rows="4" required class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors" placeholder="¿En qué le podemos ayudar?"></textarea>
+          </div>
+          <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-colors">
+            Enviar Mensaje
+          </button>
+        </form>
+        <p class="text-xs text-textSecondary text-center mt-4">
+          Al enviar este formulario, acepta nuestra <a href="/privacy" class="text-white hover:underline">Política de Privacidad</a>.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
