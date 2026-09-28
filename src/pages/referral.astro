@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import StickyHeader from '../components/StickyHeader.astro';
 import Footer from '../components/Footer.astro';
+import LiveScores from '../components/LiveScores.astro';
 import { Users, Gift, Share2, ArrowRight } from 'lucide-astro';
 ---
 
@@ -24,6 +25,11 @@ import { Users, Gift, Share2, ArrowRight } from 'lucide-astro';
       <p class="text-xl text-textSecondary mb-16 max-w-2xl mx-auto">
         El boca a boca es nuestra mejor publicidad en Costa Rica. Si usted ya es cliente, invite a sus amigos y familiares. Cuando ellos compren un plan, ¡ambos reciben 30 días adicionales completamente gratis!
       </p>
+
+      <!-- Live Sports Scoreboard Carousel -->
+      <div class="mb-16">
+        <LiveScores />
+      </div>
 
       <!-- Steps -->
       <div class="grid md:grid-cols-3 gap-8 mb-16">

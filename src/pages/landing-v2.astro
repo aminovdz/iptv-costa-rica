@@ -38,10 +38,12 @@ const schema = JSON.stringify({
     "priceCurrency": "USD"
   }
 });
+
+const currentYear = new Date().getFullYear();
 ---
 
 <Layout 
-  title="Mejor IPTV Costa Rica 2025 — Comparación y Servicio Premium" 
+  title={`Mejor IPTV Costa Rica ${currentYear} — Comparación y Servicio Premium`}
   description="Descubra por qué somos considerados el mejor IPTV en Costa Rica. 100% libre de cortes, con canales Ticos, Liga FPD y soporte VIP."
   schema={schema}
 >

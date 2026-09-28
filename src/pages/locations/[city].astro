@@ -28,7 +28,8 @@ export function getStaticPaths() {
 const { city } = Astro.params;
 const { name } = Astro.props;
 
-const title = `Mejor IPTV en ${name} — Televisión Premium 2025`;
+const currentYear = new Date().getFullYear();
+const title = `Mejor IPTV en ${name} — Televisión Premium ${currentYear}`;
 const description = `El mejor proveedor de IPTV en ${name}. Todos los canales nacionales, la Liga FPD en vivo y películas en 4K. Active hoy con Tarjetas y Cripto.`;
 
 const localSchema = JSON.stringify({

@@ -1,5 +1,5 @@
 ---
-title: "¿Es Legal el IPTV en Costa Rica? Todo lo que Debe Saber en 2025"
+title: "¿Es Legal el IPTV en Costa Rica? Todo lo que Debe Saber en 2026"
 description: "Análisis completo sobre la legalidad del IPTV en Costa Rica. Conozca las normativas de la SUTEL, la diferencia entre consumo y distribución, y cómo usar streaming de forma segura."
 pubDate: 2026-09-12
 heroImage: "/images/legal_iptv.jpg"

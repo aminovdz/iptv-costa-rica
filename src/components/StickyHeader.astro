@@ -13,6 +13,10 @@ import { Menu, X, Tv } from 'lucide-astro';
       <!-- Desktop Nav -->
       <nav class="hidden md:flex gap-8 items-center" aria-label="Navegación Principal">
         <a href="/" class="text-sm font-medium text-textPrimary/80 hover:text-white transition-colors">Inicio</a>
+        <a href="/livescore" class="text-sm font-semibold text-textPrimary/90 hover:text-white transition-colors inline-flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+          Match Center
+        </a>
         <a href="/precios" class="text-sm font-medium text-textPrimary/80 hover:text-white transition-colors">Precios</a>
         <a href="/canales" class="text-sm font-medium text-textPrimary/80 hover:text-white transition-colors">Canales</a>
         <a href="/guides" class="text-sm font-medium text-textPrimary/80 hover:text-white transition-colors">Guías</a>
@@ -35,6 +39,10 @@ import { Menu, X, Tv } from 'lucide-astro';
   <div id="mobile-menu" class="md:hidden hidden bg-card border-b border-white/10" aria-hidden="true">
     <div class="px-2 pt-2 pb-6 space-y-1 sm:px-3 flex flex-col items-center">
       <a href="/" class="block px-3 py-3 text-base font-medium text-textPrimary hover:text-white">Inicio</a>
+      <a href="/livescore" class="px-3 py-3 text-base font-semibold text-red-400 hover:text-white inline-flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+        Match Center en Vivo
+      </a>
       <a href="/precios" class="block px-3 py-3 text-base font-medium text-textPrimary hover:text-white">Precios</a>
       <a href="/canales" class="block px-3 py-3 text-base font-medium text-textPrimary hover:text-white">Canales</a>
       <a href="/guides" class="block px-3 py-3 text-base font-medium text-textPrimary hover:text-white">Guías</a>

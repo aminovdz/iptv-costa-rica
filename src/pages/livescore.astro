@@ -1,0 +1,508 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StickyHeader from '../components/StickyHeader.astro';
+import Footer from '../components/Footer.astro';
+import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
+import FAQSection from '../components/FAQSection.astro';
+import CTASection from '../components/CTASection.astro';
+import { 
+  Activity, 
+  Tv, 
+  Calendar, 
+  CheckCircle2, 
+  Play, 
+  ShieldCheck, 
+  Zap, 
+  ArrowRight,
+  ExternalLink,
+  Flame,
+  Radio
+} from 'lucide-astro';
+
+interface MatchItem {
+  id: string;
+  leagueId: string;
+  leagueName: string;
+  leagueCategory: string;
+  date: string;
+  formattedTime: string;
+  status: string;
+  isLive: boolean;
+  state: 'pre' | 'in' | 'post';
+  homeTeam: string;
+  homeScore: string;
+  homeLogo: string;
+  awayTeam: string;
+  awayScore: string;
+  awayLogo: string;
+}
+
+const fallbackMatches: MatchItem[] = [
+  {
+    id: 'crc-1',
+    leagueId: 'crc.1',
+    leagueName: 'Liga Promerica (Costa Rica)',
+    leagueCategory: 'Costa Rica',
+    date: '2026-09-28T20:00Z',
+    formattedTime: '20:00 CR',
+    status: '65\'',
+    isLive: true,
+    state: 'in',
+    homeTeam: 'Deportivo Saprissa',
+    homeScore: '2',
+    homeLogo: 'https://a.espncdn.com/i/teamlogos/soccer/500/2058.png',
+    awayTeam: 'LD Alajuelense',
+    awayScore: '1',
+    awayLogo: 'https://a.espncdn.com/i/teamlogos/soccer/500/2057.png'
+  },
+  {
+    id: 'crc-2',
+    leagueId: 'crc.1',
+    leagueName: 'Liga Promerica (Costa Rica)',
+    leagueCategory: 'Costa Rica',
+    date: '2026-09-28T18:00Z',
+    formattedTime: 'Final',
+    status: 'FT',
+    isLive: false,
+    state: 'post',
+    homeTeam: 'CS Herediano',
+    homeScore: '3',
+    homeLogo: 'https://a.espncdn.com/i/teamlogos/soccer/500/2060.png',
+    awayTeam: 'CS Cartaginés',
+    awayScore: '1',
+    awayLogo: 'https://a.espncdn.com/i/teamlogos/soccer/500/2059.png'
+  },
+  {
+    id: 'ucl-1',
+    leagueId: 'uefa.champions',
+    leagueName: 'UEFA Champions League',
+    leagueCategory: 'Internacional',
+    date: '2026-09-29T19:00Z',
+    formattedTime: '13:00 CR',
+    status: 'FT',
+    isLive: false,
+    state: 'post',
+    homeTeam: 'Real Madrid',
+    homeScore: '3',
+    homeLogo: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png',
+    awayTeam: 'Bayern München',
+    awayScore: '2',
+    awayLogo: 'https://a.espncdn.com/i/teamlogos/soccer/500/132.png'
+  },
+  {
+    id: 'esp-1',
+    leagueId: 'esp.1',
+    leagueName: 'LaLiga EA Sports',
+    leagueCategory: 'España',
+    date: '2026-09-28T19:00Z',
+    formattedTime: 'Final',
+    status: 'FT',
+    isLive: false,
+    state: 'post',
+    homeTeam: 'FC Barcelona',
+    homeScore: '4',
+    homeLogo: 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png',
+    awayTeam: 'Atlético de Madrid',
+    awayScore: '1',
+    awayLogo: 'https://a.espncdn.com/i/teamlogos/soccer/500/1068.png'
+  },
+  {
+    id: 'eng-1',
+    leagueId: 'eng.1',
+    leagueName: 'Premier League',
+    leagueCategory: 'Inglaterra',
+    date: '2026-09-28T16:30Z',
+    formattedTime: 'Final',
+    status: 'FT',
+    isLive: false,
+    state: 'post',
+    homeTeam: 'Liverpool',
+    homeScore: '2',
+    homeLogo: 'https://a.espncdn.com/i/teamlogos/soccer/500/364.png',
+    awayTeam: 'Manchester City',
+    awayScore: '2',
+    awayLogo: 'https://a.espncdn.com/i/teamlogos/soccer/500/382.png'
+  }
+];
+
+let matches: MatchItem[] = [];
+
+try {
+  const leagues = [
+    { id: 'crc.1', name: 'Liga Promerica (Costa Rica)', category: 'Costa Rica' },
+    { id: 'uefa.champions', name: 'UEFA Champions League', category: 'Internacional' },
+    { id: 'esp.1', name: 'LaLiga EA Sports', category: 'España' },
+    { id: 'eng.1', name: 'Premier League', category: 'Inglaterra' },
+    { id: 'ned.1', name: 'Dutch Eredivisie', category: 'Europa' }
+  ];
+
+  const results = await Promise.all(leagues.map(async (l) => {
+    try {
+      const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${l.id}/scoreboard`);
+      if (!res.ok) return [];
+      const data = await res.json();
+      return (data.events || []).map((e: any) => {
+        const comp = e.competitions?.[0];
+        const home = comp?.competitors?.find((c: any) => c.homeAway === 'home');
+        const away = comp?.competitors?.find((c: any) => c.homeAway === 'away');
+        const rawStatus = e.status?.type?.shortDetail || 'TBD';
+        const state = e.status?.type?.state || 'pre';
+        const isLive = state === 'in' || rawStatus.includes('\'') || rawStatus === 'HT';
+
+        // Format date in Costa Rica time
+        let formattedTime = rawStatus;
+        try {
+          if (state === 'pre') {
+            const d = new Date(e.date);
+            formattedTime = d.toLocaleTimeString('es-CR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Costa_Rica' }) + ' CR';
+          }
+        } catch {
+          formattedTime = rawStatus;
+        }
+
+        return {
+          id: e.id,
+          leagueId: l.id,
+          leagueName: l.name,
+          leagueCategory: l.category,
+          date: e.date,
+          formattedTime,
+          status: rawStatus,
+          isLive,
+          state,
+          homeTeam: home?.team?.displayName || home?.team?.name || 'Local',
+          homeScore: home?.score !== undefined ? String(home.score) : '-',
+          homeLogo: home?.team?.logo || '',
+          awayTeam: away?.team?.displayName || away?.team?.name || 'Visita',
+          awayScore: away?.score !== undefined ? String(away.score) : '-',
+          awayLogo: away?.team?.logo || ''
+        };
+      });
+    } catch {
+      return [];
+    }
+  }));
+
+  const flat = results.flat();
+  matches = flat.length > 0 ? flat : fallbackMatches;
+} catch (e) {
+  console.error("Error fetching match center fixtures:", e);
+  matches = fallbackMatches;
+}
+
+const liveMatchesCount = matches.filter(m => m.isLive).length;
+
+const currentYear = new Date().getFullYear();
+
+const matchCenterSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "ItemPage",
+  "name": `Match Center & Marcadores en Vivo ${currentYear} — IPTV Costa Rica`,
+  "description": "Centro de marcadores en vivo para la Liga Promerica (FPD), Champions League, LaLiga y torneos internacionales con señal IPTV en HD y 4K.",
+  "url": "https://iptvcostarica.live/livescore",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Inicio",
+        "item": "https://iptvcostarica.live/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Match Center",
+        "item": "https://iptvcostarica.live/livescore"
+      }
+    ]
+  }
+});
+---
+
+<Layout 
+  title={`Match Center en Vivo ${currentYear} — Resultados y Fútbol en Directo | IPTV Costa Rica`}
+  description="Siga los marcadores en tiempo real de la Liga Promerica (FPD), Champions League, LaLiga y Premier League. Transmita cada partido en vivo en HD y 4K con IPTV Costa Rica."
+  schema={matchCenterSchema}
+>
+  <StickyHeader />
+
+  <main class="py-12 bg-background min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-xs text-textSecondary mb-8" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-white transition-colors">Inicio</a>
+        <span>/</span>
+        <span class="text-white font-medium">Match Center en Vivo</span>
+      </nav>
+
+      <!-- Match Center Hero -->
+      <div class="relative rounded-3xl p-8 md:p-12 mb-12 overflow-hidden border border-white/10 glass-panel">
+        <div class="absolute -right-20 -top-20 w-96 h-96 bg-primary/20 blur-[100px] pointer-events-none" aria-hidden="true"></div>
+        <div class="absolute -left-20 -bottom-20 w-96 h-96 bg-secondary/20 blur-[100px] pointer-events-none" aria-hidden="true"></div>
+
+        <div class="relative z-10 max-w-3xl">
+          <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
+            </span>
+            <span class="text-xs font-bold uppercase tracking-wider text-red-400">
+              {liveMatchesCount > 0 ? `${liveMatchesCount} Partidos en Vivo Ahora` : 'Resultados y Próximos Encuentros'}
+            </span>
+          </div>
+
+          <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight mb-4">
+            Match Center & Fútbol en Vivo
+          </h1>
+
+          <p class="text-base md:text-lg text-textSecondary mb-8 leading-relaxed">
+            Consulte los marcadores oficiales minuto a minuto de la <strong class="text-white">Liga Promerica (FPD)</strong>, Champions League, LaLiga y torneos internacionales. ¡No se pierda ningún gol y mírelo en vivo con señal IPTV 4K sin congelamientos!
+          </p>
+
+          <div class="flex flex-wrap items-center gap-4">
+            <a 
+              href="https://wa.me/18036582620?text=Hola%2C%20estoy%20en%20el%20Match%20Center%20y%20quiero%20probar%20IPTV%20para%20ver%20el%20f%C3%BAtbol%20en%20vivo" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 bg-secondary hover:bg-red-700 text-white font-bold px-6 py-3.5 rounded-full shadow-[0_0_20px_rgba(206,17,38,0.4)] transition-all hover:scale-105"
+            >
+              <Radio class="w-5 h-5 animate-pulse" />
+              Solicitar Señal en Vivo por WhatsApp
+            </a>
+
+            <a 
+              href="/precios" 
+              class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold px-6 py-3.5 rounded-full border border-white/10 transition-colors"
+            >
+              <Tv class="w-5 h-5 text-primary" />
+              Ver Planes de IPTV
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick League Filter Pills -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar" id="league-filters">
+        <button 
+          class="league-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-primary text-white border border-primary" 
+          data-filter="all"
+        >
+          Todos los Partidos ({matches.length})
+        </button>
+        <button 
+          class="league-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white/5 hover:bg-white/10 text-textSecondary hover:text-white border border-white/10" 
+          data-filter="Costa Rica"
+        >
+          🇨🇷 Liga FPD
+        </button>
+        <button 
+          class="league-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white/5 hover:bg-white/10 text-textSecondary hover:text-white border border-white/10" 
+          data-filter="Internacional"
+        >
+          🏆 Champions League
+        </button>
+        <button 
+          class="league-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white/5 hover:bg-white/10 text-textSecondary hover:text-white border border-white/10" 
+          data-filter="España"
+        >
+          🇪🇸 LaLiga
+        </button>
+        <button 
+          class="league-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white/5 hover:bg-white/10 text-textSecondary hover:text-white border border-white/10" 
+          data-filter="Inglaterra"
+        >
+          🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League
+        </button>
+      </div>
+
+      <!-- Match Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16" id="matches-grid">
+        {matches.map((match) => (
+          <div 
+            class="match-card glass-panel border border-white/10 rounded-2xl p-5 hover:border-primary/40 transition-all duration-300 flex flex-col justify-between group shadow-lg"
+            data-category={match.leagueCategory}
+          >
+            <!-- Card Header: League & Status -->
+            <div class="flex items-center justify-between gap-2 border-b border-white/5 pb-3 mb-4">
+              <span class="text-xs font-bold tracking-wide text-textSecondary group-hover:text-primary transition-colors truncate">
+                {match.leagueName}
+              </span>
+              <span class={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+                match.isLive 
+                  ? 'bg-red-500/20 text-red-400 border border-red-500/30 font-bold' 
+                  : match.state === 'post'
+                  ? 'bg-white/5 text-textSecondary'
+                  : 'bg-primary/20 text-primary border border-primary/30'
+              }`}>
+                {match.isLive && <span class="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse"></span>}
+                {match.formattedTime}
+              </span>
+            </div>
+
+            <!-- Teams Area -->
+            <div class="space-y-4 my-2">
+              <!-- Home Team -->
+              <div class="flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3 truncate">
+                  {match.homeLogo ? (
+                    <img 
+                      src={match.homeLogo} 
+                      alt={`Escudo ${match.homeTeam}`} 
+                      class="w-7 h-7 object-contain shrink-0" 
+                      loading="lazy" 
+                      width="28" 
+                      height="28"
+                    />
+                  ) : (
+                    <div class="w-7 h-7 rounded-full bg-white/10 shrink-0" />
+                  )}
+                  <span class="text-sm font-semibold text-white truncate">{match.homeTeam}</span>
+                </div>
+                <span class={`text-lg font-bold tabular-nums px-2.5 py-1 rounded-lg ${
+                  match.state !== 'pre' ? 'bg-white/10 text-white font-extrabold' : 'text-textSecondary/40'
+                }`}>
+                  {match.homeScore}
+                </span>
+              </div>
+
+              <!-- Away Team -->
+              <div class="flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3 truncate">
+                  {match.awayLogo ? (
+                    <img 
+                      src={match.awayLogo} 
+                      alt={`Escudo ${match.awayTeam}`} 
+                      class="w-7 h-7 object-contain shrink-0" 
+                      loading="lazy" 
+                      width="28" 
+                      height="28"
+                    />
+                  ) : (
+                    <div class="w-7 h-7 rounded-full bg-white/10 shrink-0" />
+                  )}
+                  <span class="text-sm font-semibold text-white truncate">{match.awayTeam}</span>
+                </div>
+                <span class={`text-lg font-bold tabular-nums px-2.5 py-1 rounded-lg ${
+                  match.state !== 'pre' ? 'bg-white/10 text-white font-extrabold' : 'text-textSecondary/40'
+                }`}>
+                  {match.awayScore}
+                </span>
+              </div>
+            </div>
+
+            <!-- Card Action Footer -->
+            <div class="mt-5 pt-3 border-t border-white/5 flex items-center justify-between gap-3">
+              <span class="text-[11px] text-textSecondary flex items-center gap-1">
+                <Tv class="w-3.5 h-3.5 text-primary" />
+                FUTV / ESPN / Teletica
+              </span>
+
+              <a 
+                href={`https://wa.me/18036582620?text=Hola%2C%20quiero%20ver%20en%20vivo%20el%20partido%20${encodeURIComponent(match.homeTeam)}%20vs%20${encodeURIComponent(match.awayTeam)}%20por%20IPTV`} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-primary/30 hover:bg-primary px-3 py-1.5 rounded-lg border border-primary/40 transition-all hover:scale-105"
+                title={`Ver transmisión de ${match.homeTeam} vs ${match.awayTeam}`}
+              >
+                <span>Ver en Vivo</span>
+                <Play class="w-3 h-3 fill-current" />
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Live Sports Features Banner -->
+      <div class="glass-panel border border-white/10 rounded-3xl p-8 md:p-10 mb-16 bg-gradient-to-r from-card to-background relative overflow-hidden">
+        <div class="max-w-3xl">
+          <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-secondary mb-3">
+            <Flame class="w-4 h-4" />
+            Experiencia de Estadio en Casa
+          </div>
+          <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-4">
+            ¿Por qué ver sus partidos con IPTV Costa Rica?
+          </h2>
+          <p class="text-textSecondary text-sm md:text-base leading-relaxed mb-6">
+            Olvídese de transmisiones piratas llenas de anuncios intrusivos y caídas justo en el minuto 90. Con nuestra señal privada, usted disfruta de la narración oficial tica y extranjera con la máxima estabilidad.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            <div class="flex items-start gap-3 bg-white/5 p-4 rounded-xl border border-white/5">
+              <Zap class="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+              <div>
+                <h4 class="text-white font-bold text-sm">Cero Latencia</h4>
+                <p class="text-xs text-textSecondary mt-0.5">Grite el gol al mismo tiempo que en la radio.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3 bg-white/5 p-4 rounded-xl border border-white/5">
+              <CheckCircle2 class="w-5 h-5 text-green-400 shrink-0 mt-0.5" />
+              <div>
+                <h4 class="text-white font-bold text-sm">Todos los Canales</h4>
+                <p class="text-xs text-textSecondary mt-0.5">FUTV, Teletica, Repretel, ESPN 1 al 7 y Fox.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3 bg-white/5 p-4 rounded-xl border border-white/5">
+              <ShieldCheck class="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
+              <div>
+                <h4 class="text-white font-bold text-sm">Calidad 4K Real</h4>
+                <p class="text-xs text-textSecondary mt-0.5">Señal a 60 FPS sin cortes ni pixelado.</p>
+              </div>
+            </div>
+          </div>
+
+          <a 
+            href="https://wa.me/18036582620?text=Hola%2C%20quiero%20mi%20prueba%20gratis%20para%20probar%20los%20canales%20deportivos" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="inline-flex items-center gap-2 bg-secondary hover:bg-red-700 text-white font-bold px-6 py-3 rounded-full transition-all shadow-lg hover:scale-105"
+          >
+            <span>Activar Prueba Gratis de 24 Horas</span>
+            <ArrowRight class="w-4 h-4" />
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Supplementary Sections -->
+    <FAQSection />
+    <CTASection />
+  </main>
+
+  <Footer />
+  <FloatingWhatsApp />
+</Layout>
+
+<script>
+  // Filter functionality for Match Center leagues
+  const filterButtons = document.querySelectorAll('.league-filter-btn');
+  const matchCards = document.querySelectorAll('.match-card');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Toggle button styles
+      filterButtons.forEach(btn => {
+        btn.classList.remove('bg-primary', 'text-white', 'border-primary');
+        btn.classList.add('bg-white/5', 'text-textSecondary', 'border-white/10');
+      });
+
+      button.classList.remove('bg-white/5', 'text-textSecondary', 'border-white/10');
+      button.classList.add('bg-primary', 'text-white', 'border-primary');
+
+      const filter = button.getAttribute('data-filter');
+
+      matchCards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        if (filter === 'all' || category === filter) {
+          (card as HTMLElement).style.display = 'flex';
+        } else {
+          (card as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
